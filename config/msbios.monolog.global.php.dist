@@ -1,0 +1,27 @@
+<?php
+/**
+ * @access protected
+ * @author Judzhin Miles <info[woof-woof]msbios.com>
+ */
+namespace MSBios\Monolog;
+
+return [
+    Module::class => [
+        Config\Config::LISTENERS => [
+            Listener\CheckSlowResponseTimeListener::class => [
+                'enabled' => true,
+                'threshold' => 400
+            ],
+            Listener\LogDispatchErrorListener::class => [
+                'enabled' => true,
+            ],
+            Listener\LogMemoryUsageListener::class => [
+                'enabled' => true,
+                'type' => 1
+            ],
+            Listener\LogRenderErrorListener::class => [
+                'enabled' => true,
+            ],
+        ],
+    ]
+];
