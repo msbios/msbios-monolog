@@ -6,8 +6,8 @@
 namespace MSBios\Monolog\Factory;
 
 use Interop\Container\ContainerInterface;
-use MSBios\Monolog\Config\Config;
 use MSBios\Monolog\Module;
+use Zend\Config\Config;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**

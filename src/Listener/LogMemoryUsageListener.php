@@ -12,7 +12,7 @@ use Zend\EventManager\EventInterface;
  * Class LogMemoryUsageListener
  * @package MSBios\Monolog\Listener
  */
-class LogMemoryUsageListener extends AbstractTimemableListenerAggregate
+class LogMemoryUsageListener extends AbstractLogTimemableListener
 {
 
     /** @const APPLICATION_MEMORY */
@@ -26,7 +26,7 @@ class LogMemoryUsageListener extends AbstractTimemableListenerAggregate
      */
     public function onFinish(EventInterface $e)
     {
-        switch ($this->options->get('type')) {
+        switch ($this->getOptions()->get('type')) {
             case self::SYSTEM_MEMORY:
                  // Memory usage: 4.55 GiB / 23.91 GiB (19.013557664178%)
                  $memUsage = $this->getServerMemoryUsage(false);

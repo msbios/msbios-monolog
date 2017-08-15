@@ -7,23 +7,22 @@
 namespace MSBios\Monolog\Listener;
 
 use Monolog\Logger;
-use MSBios\Monolog\Config\Config;
-use Zend\EventManager\AbstractListenerAggregate as DefaultAbstractListenerAggregate;
+use Zend\Config\Config;
 
 /**
- * Class AbstractListenerAggregate
+ * Class AbstractLoggerListener
  * @package MSBios\Monolog\Listener
  */
-abstract class AbstractListenerAggregate extends DefaultAbstractListenerAggregate
+abstract class AbstractLogListener
 {
     /** @var Logger */
-    protected $logger;
+    private $logger;
 
     /** @var Config */
-    protected $options;
+    private $options;
 
     /**
-     * AbstractListenerAggregate constructor.
+     * AbstractLoggerListener constructor.
      * @param Logger $logger
      * @param Config $options
      */
@@ -36,8 +35,16 @@ abstract class AbstractListenerAggregate extends DefaultAbstractListenerAggregat
     /**
      * @return Logger
      */
-    protected function getLogger()
+    public function getLogger()
     {
         return $this->logger;
+    }
+
+    /**
+     * @return Config
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 }

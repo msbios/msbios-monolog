@@ -6,16 +6,16 @@
 namespace MSBios\Monolog\Listener;
 
 use Monolog\Logger;
-use MSBios\Monolog\Config\Config;
+use Zend\Config\Config;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 
 /**
- * Class AbstractTimemableListenerAggregate
+ * Class AbstractLogTimemableListener
  * @package MSBios\Monolog\Listener
  */
-abstract class AbstractTimemableListenerAggregate extends AbstractListenerAggregate
+abstract class AbstractLogTimemableListener extends AbstractLogListener
 {
     /** @var integer */
     private $startTime;

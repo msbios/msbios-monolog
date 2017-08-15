@@ -12,20 +12,21 @@ use Zend\EventManager\EventInterface;
  * Class CheckSlowResponseTimeListener
  * @package MSBios\Monolog\Listeners
  */
-class CheckSlowResponseTimeListener extends AbstractTimemableListenerAggregate
+class CheckSlowResponseTimeListener extends AbstractLogTimemableListener
 {
     /** @const THRESHOLD */
     const THRESHOLD = 'threshold';
 
     /**
      * @param EventInterface $e
+     * @throws LoggingException
      */
     public function onFinish(EventInterface $e)
     {
         /** @var integer $elapsedTime */
         $elapsedTime = (microtime(true) - $this->getStartTime()) * 1000;
 
-        if ($elapsedTime > $this->options->get(self::THRESHOLD)) {
+        if ($elapsedTime > $this->getOptions()->get(self::THRESHOLD)) {
             try {
                 $this->getLogger()->info(sprintf("%.0fms", $elapsedTime));
             } catch (\Exception $e) {

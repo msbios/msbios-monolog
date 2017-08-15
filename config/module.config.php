@@ -3,66 +3,50 @@
  * @access protected
  * @author Judzhin Miles <info[woof-woof]msbios.com>
  */
+
 namespace MSBios\Monolog;
 
 return [
 
     'service_manager' => [
+        'invokables' => [
+
+        ],
         'factories' => [
-            Module::class => Factory\ModelFactory::class
+            Module::class => Factory\ModelFactory::class,
+
+            // listeners
+            Listener\CheckSlowResponseTimeListener::class =>
+                Factory\LazyLoggerListenerFactory::class,
+            Listener\LogDispatchErrorListener::class =>
+                Factory\LazyLoggerListenerFactory::class,
+            Listener\LogRenderErrorListener::class =>
+                Factory\LazyLoggerListenerFactory::class
         ]
     ],
 
     Module::class => [
-        Config\Config::LISTENERS => [
-            Listener\CheckSlowResponseTimeListener::class => [
-                'enabled' => false,
-                'logger' => Logger\SlowResponseTimeInterface::class,
-                'threshold' => 400
-            ],
-            Listener\LogDispatchErrorListener::class => [
-                'enabled' => false,
-                'logger' => Logger\DispatchErrorInterface::class
-            ],
-            Listener\LogMemoryUsageListener::class => [
-                'enabled' => false,
-                'logger' => Logger\DefaultLoggerInterface::class,
-                'type' => 1
-            ],
-            Listener\LogRenderErrorListener::class => [
-                'enabled' => false,
-                'logger' => Logger\RenderErrorInterface::class
+        'listeners' => [
+            [
+                'listener' => Listener\CheckSlowResponseTimeListener::class,
+                'method' => 'onFinish',
+                'event' => \Zend\Mvc\MvcEvent::EVENT_FINISH,
+                'priority' => 100,
+            ], [
+                'listener' => Listener\LogDispatchErrorListener::class,
+                'method' => 'onDispatchError',
+                'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
+                'priority' => 100,
+            ], [
+                'listener' => Listener\LogRenderErrorListener::class,
+                'method' => 'onRenderError',
+                'event' => \Zend\Mvc\MvcEvent::EVENT_RENDER_ERROR,
+                'priority' => 100,
             ],
         ],
+
         'loggers' => [
-            Logger\DefaultLoggerInterface::class => [
-                'handlers' => [
-                    Handler\DefaultHandlerInterface::class
-                ],
-                'processors' => [
-                    \Monolog\Processor\WebProcessor::class,
-                    \Monolog\Processor\PsrLogMessageProcessor::class
-                ],
-            ],
-            Logger\DispatchErrorInterface::class => [
-                'handlers' => [
-                    Handler\DispatchErrorInterface::class
-                ],
-                'processors' => [
-                    \Monolog\Processor\WebProcessor::class,
-                    \Monolog\Processor\PsrLogMessageProcessor::class
-                ],
-            ],
-            Logger\RenderErrorInterface::class => [
-                'handlers' => [
-                    Handler\RenderErrorInterface::class
-                ],
-                'processors' => [
-                    \Monolog\Processor\WebProcessor::class,
-                    \Monolog\Processor\PsrLogMessageProcessor::class
-                ],
-            ],
-            Logger\SlowResponseTimeInterface::class => [
+            Listener\CheckSlowResponseTimeListener::class => [
                 'handlers' => [
                     Handler\SlowResponseTimeInterface::class
                 ],
@@ -70,8 +54,31 @@ return [
                     \Monolog\Processor\WebProcessor::class,
                     \Monolog\Processor\PsrLogMessageProcessor::class
                 ],
+                'enabled' => true,
+                'threshold' => 400
             ],
+            Listener\LogDispatchErrorListener::class => [
+                'handlers' => [
+                    Handler\DispatchErrorInterface::class
+                ],
+                'processors' => [
+                    \Monolog\Processor\WebProcessor::class,
+                    \Monolog\Processor\PsrLogMessageProcessor::class
+                ],
+                'enabled' => true,
+            ],
+            Listener\LogRenderErrorListener::class => [
+                'handlers' => [
+                    Handler\RenderErrorInterface::class
+                ],
+                'processors' => [
+                    \Monolog\Processor\WebProcessor::class,
+                    \Monolog\Processor\PsrLogMessageProcessor::class
+                ],
+                'enabled' => true,
+            ]
         ],
+
         'handlers' => [
             Handler\DefaultHandlerInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
@@ -102,6 +109,7 @@ return [
                 'formatter' => Formatter\SlowResponseTimeInterface::class
             ]
         ],
+
         'formatters' => [
             Formatter\DefaultFormatterInterface::class => [
                 'class' => \Monolog\Formatter\LineFormatter::class,

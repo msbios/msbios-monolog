@@ -13,11 +13,13 @@ use MSBios\ModuleInterface;
 use MSBios\Monolog\Config\Config;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
+use Zend\EventManager\LazyListenerAggregate;
 use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\Mvc\Application;
+use Zend\Mvc\ApplicationInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -49,68 +51,16 @@ class Module implements ModuleInterface, BootstrapListenerInterface, AutoloaderP
      */
     public function onBootstrap(EventInterface $e)
     {
-        /** @var Application $target */
+        /** @var ApplicationInterface $target */
         $target = $e->getTarget();
 
         /** @var ServiceLocatorInterface $serviceManager */
         $serviceManager = $target->getServiceManager();
 
-        /** @var Config $config */
-        $config = $serviceManager->get(self::class);
-
-        /**
-         * @var string $className
-         * @var Config $listenerArgs
-         */
-        foreach ($config->get('listeners') as $className => $listenerArgs) {
-            if (! $listenerArgs->get(self::ENABLED, false)) {
-                continue;
-            }
-
-            /** @var Logger $logger */
-            $logger = new Logger($className);
-
-            /** @var Config $loggerData */
-            $loggerData = $config->getLoggers()
-                ->get($listenerArgs->get('logger'));
-
-            /** @var string $handlerName */
-            foreach ($loggerData->get('handlers') as $handlerName) {
-
-                /** @var Config $handlersData */
-                $handlersData = $config->getHandlers()
-                    ->get($handlerName);
-
-                /** @var HandlerInterface $handler */
-                $handler = (new \ReflectionClass($handlersData->get('class')))->newInstanceArgs(
-                    $handlersData->get('args')->toArray()
-                );
-
-                /** @var Config $formatterData */
-                $formatterData = $config->getFormatters()
-                    ->get($handlersData->get('formatter'));
-
-                /** @var FormatterInterface $formatter */
-                $formatter = (new \ReflectionClass($formatterData->get('class')))->newInstanceArgs(
-                    $formatterData->get('args')->toArray()
-                );
-
-                $handler->setFormatter($formatter);
-                $logger->pushHandler($handler);
-            }
-
-            /** @var string $processorName */
-            foreach ($loggerData->get('processors') as $processorName) {
-                $logger->pushProcessor(new $processorName());
-            }
-
-            /** @var AbstractListenerAggregate $listenerAggregate */
-            $listenerAggregate = new $className($logger, $listenerArgs);
-
-            if ($listenerAggregate instanceof AbstractListenerAggregate) {
-                $listenerAggregate->attach($target->getEventManager());
-            }
-        }
+        (new LazyListenerAggregate(
+            $serviceManager->get(self::class)->get('listeners')->toArray(),
+            $serviceManager
+        ))->attach($target->getEventManager());
     }
 
     /**
