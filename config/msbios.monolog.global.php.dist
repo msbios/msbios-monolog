@@ -3,25 +3,89 @@
  * @access protected
  * @author Judzhin Miles <info[woof-woof]msbios.com>
  */
+
 namespace MSBios\Monolog;
 
 return [
     Module::class => [
-        Config\Config::LISTENERS => [
+        'loggers' => [
             Listener\CheckSlowResponseTimeListener::class => [
+                'handlers' => [
+                    Handler\SlowResponseTimeInterface::class
+                ],
+                'processors' => [
+                    \Monolog\Processor\WebProcessor::class,
+                    \Monolog\Processor\PsrLogMessageProcessor::class
+                ],
                 'enabled' => true,
                 'threshold' => 400
             ],
             Listener\LogDispatchErrorListener::class => [
+                'handlers' => [
+                    Handler\DispatchErrorInterface::class
+                ],
+                'processors' => [
+                    \Monolog\Processor\WebProcessor::class,
+                    \Monolog\Processor\PsrLogMessageProcessor::class
+                ],
                 'enabled' => true,
-            ],
-            Listener\LogMemoryUsageListener::class => [
-                'enabled' => true,
-                'type' => 1
             ],
             Listener\LogRenderErrorListener::class => [
+                'handlers' => [
+                    Handler\RenderErrorInterface::class
+                ],
+                'processors' => [
+                    \Monolog\Processor\WebProcessor::class,
+                    \Monolog\Processor\PsrLogMessageProcessor::class
+                ],
                 'enabled' => true,
-            ],
+            ]
         ],
+
+        'handlers' => [
+            Handler\DefaultHandlerInterface::class => [
+                'class' => \Monolog\Handler\StreamHandler::class,
+                'args' => [
+                    'stream' => './data/logs/monolog/default.handler.log'
+                ],
+                'formatter' => Formatter\SlowResponseTimeInterface::class
+            ],
+            Handler\DispatchErrorInterface::class => [
+                'class' => \Monolog\Handler\StreamHandler::class,
+                'args' => [
+                    'stream' => './data/logs/monolog/dispatch.error.handler.log'
+                ],
+                'formatter' => Formatter\DefaultFormatterInterface::class
+            ],
+            Handler\RenderErrorInterface::class => [
+                'class' => \Monolog\Handler\StreamHandler::class,
+                'args' => [
+                    'stream' => './data/logs/monolog/render.error.handler.log'
+                ],
+                'formatter' => Formatter\DefaultFormatterInterface::class
+            ],
+            Handler\SlowResponseTimeInterface::class => [
+                'class' => \Monolog\Handler\StreamHandler::class,
+                'args' => [
+                    'stream' => './data/logs/monolog/slow.response.handler.log'
+                ],
+                'formatter' => Formatter\SlowResponseTimeInterface::class
+            ]
+        ],
+
+        'formatters' => [
+            Formatter\DefaultFormatterInterface::class => [
+                'class' => \Monolog\Formatter\LineFormatter::class,
+                'args' => [
+                    'format' => "%datetime% - %channel% - %message% \n%extra% \n",
+                ],
+            ],
+            Formatter\SlowResponseTimeInterface::class => [
+                'class' => \Monolog\Formatter\LineFormatter::class,
+                'args' => [
+                    'format' => "%datetime% - %channel% - %message% \n%extra% \n",
+                ],
+            ]
+        ]
     ]
 ];
