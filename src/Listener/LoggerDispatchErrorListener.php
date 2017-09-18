@@ -6,14 +6,18 @@
 
 namespace MSBios\Monolog\Listener;
 
+use MSBios\Monolog\LoggerAwareInterface;
+use MSBios\Monolog\LoggerAwareTrait;
 use Zend\EventManager\EventInterface;
 
 /**
  * Class LogDispatchErrorListener
  * @package MSBios\Monolog\Listener
  */
-class LogDispatchErrorListener extends AbstractLogListener
+class LoggerDispatchErrorListener implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @param EventInterface $event
      */

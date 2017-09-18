@@ -5,6 +5,8 @@
  */
 namespace MSBios\Monolog\Handler;
 
+use Monolog\Handler\HandlerInterface;
+
 /**
  * Interface RenderErrorInterface
  * @package MSBios\Monolog\Handler

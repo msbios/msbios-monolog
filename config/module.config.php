@@ -6,22 +6,27 @@
 
 namespace MSBios\Monolog;
 
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
 
     'service_manager' => [
-        'invokables' => [
-
-        ],
         'factories' => [
             Module::class => Factory\ModelFactory::class,
 
+            // logger manager
+            LoggerManager::class => Factory\LoggerManagerFactory::class,
+
             // listeners
-            Listener\CheckSlowResponseTimeListener::class =>
-                Factory\LazyLoggerListenerFactory::class,
-            Listener\LogDispatchErrorListener::class =>
-                Factory\LazyLoggerListenerFactory::class,
-            Listener\LogRenderErrorListener::class =>
-                Factory\LazyLoggerListenerFactory::class
+            Listener\CheckSlowResponseTimeListener::class => InvokableFactory::class,
+            Listener\LoggerDispatchErrorListener::class => InvokableFactory::class,
+            Listener\LoggerRenderErrorListener::class => InvokableFactory::class
+        ],
+        'shared' => [
+            Logger::class => false
+        ],
+        'initializers' => [
+            new Initializer\LoggerInitializer
         ]
     ],
 
@@ -33,12 +38,12 @@ return [
                 'event' => \Zend\Mvc\MvcEvent::EVENT_FINISH,
                 'priority' => 100,
             ], [
-                'listener' => Listener\LogDispatchErrorListener::class,
+                'listener' => Listener\LoggerDispatchErrorListener::class,
                 'method' => 'onDispatchError',
                 'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
                 'priority' => 100,
             ], [
-                'listener' => Listener\LogRenderErrorListener::class,
+                'listener' => Listener\LoggerRenderErrorListener::class,
                 'method' => 'onRenderError',
                 'event' => \Zend\Mvc\MvcEvent::EVENT_RENDER_ERROR,
                 'priority' => 100,
@@ -54,10 +59,12 @@ return [
                     \Monolog\Processor\WebProcessor::class,
                     \Monolog\Processor\PsrLogMessageProcessor::class
                 ],
-                'enabled' => true,
-                'threshold' => 400
+                'options' => [
+                    'enabled' => true,
+                    'threshold' => 400
+                ]
             ],
-            Listener\LogDispatchErrorListener::class => [
+            Listener\LoggerDispatchErrorListener::class => [
                 'handlers' => [
                     Handler\DispatchErrorInterface::class
                 ],
@@ -65,9 +72,11 @@ return [
                     \Monolog\Processor\WebProcessor::class,
                     \Monolog\Processor\PsrLogMessageProcessor::class
                 ],
-                'enabled' => true,
+                'options' => [
+                    'enabled' => true
+                ]
             ],
-            Listener\LogRenderErrorListener::class => [
+            Listener\LoggerRenderErrorListener::class => [
                 'handlers' => [
                     Handler\RenderErrorInterface::class
                 ],
@@ -75,49 +84,48 @@ return [
                     \Monolog\Processor\WebProcessor::class,
                     \Monolog\Processor\PsrLogMessageProcessor::class
                 ],
-                'enabled' => true,
-            ]
+                'options' => [
+                    'enabled' => true
+                ]
+            ],
         ],
 
         'handlers' => [
+
+            // Default
             Handler\DefaultHandlerInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
                 'args' => [
-                    'stream' => './data/logs/monolog/default.handler.log'
+                    'stream' => './data/logs/default.handler.log'
                 ],
-                'formatter' => Formatter\SlowResponseTimeInterface::class
+                'formatter' => Formatter\DefaultFormatterInterface::class
             ],
+
             Handler\DispatchErrorInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
                 'args' => [
-                    'stream' => './data/logs/monolog/dispatch.error.handler.log'
+                    'stream' => './data/logs/dispatch.error.handler.log'
                 ],
                 'formatter' => Formatter\DefaultFormatterInterface::class
             ],
             Handler\RenderErrorInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
                 'args' => [
-                    'stream' => './data/logs/monolog/render.error.handler.log'
+                    'stream' => './data/logs/render.error.handler.log'
                 ],
                 'formatter' => Formatter\DefaultFormatterInterface::class
             ],
             Handler\SlowResponseTimeInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
                 'args' => [
-                    'stream' => './data/logs/monolog/slow.response.handler.log'
+                    'stream' => './data/logs/slow.response.handler.log'
                 ],
-                'formatter' => Formatter\SlowResponseTimeInterface::class
+                'formatter' => Formatter\DefaultFormatterInterface::class
             ]
         ],
 
         'formatters' => [
             Formatter\DefaultFormatterInterface::class => [
-                'class' => \Monolog\Formatter\LineFormatter::class,
-                'args' => [
-                    'format' => "%datetime% - %channel% - %message% \n%extra% \n",
-                ],
-            ],
-            Formatter\SlowResponseTimeInterface::class => [
                 'class' => \Monolog\Formatter\LineFormatter::class,
                 'args' => [
                     'format' => "%datetime% - %channel% - %message% \n%extra% \n",

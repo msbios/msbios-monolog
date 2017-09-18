@@ -12,7 +12,7 @@ use Zend\EventManager\EventInterface;
  * Class LogMemoryUsageListener
  * @package MSBios\Monolog\Listener
  */
-class LogMemoryUsageListener extends AbstractLogTimemableListener
+class LogMemoryUsageListener extends AbstractTimemableListener
 {
 
     /** @const APPLICATION_MEMORY */

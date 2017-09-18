@@ -12,7 +12,7 @@ use Zend\EventManager\EventInterface;
  * Class CheckSlowResponseTimeListener
  * @package MSBios\Monolog\Listeners
  */
-class CheckSlowResponseTimeListener extends AbstractLogTimemableListener
+class CheckSlowResponseTimeListener extends AbstractTimemableListener
 {
     /** @const THRESHOLD */
     const THRESHOLD = 'threshold';
@@ -31,9 +31,7 @@ class CheckSlowResponseTimeListener extends AbstractLogTimemableListener
                 $this->getLogger()->info(sprintf("%.0fms", $elapsedTime));
             } catch (\Exception $e) {
                 throw new LoggingException(
-                    'An Exception happenned while logging message for CheckSlowRespondTimeListener on action onFinish',
-                    500,
-                    $e
+                    'An Exception happenned while logging message for CheckSlowRespondTimeListener on action onFinish', 500, $e
                 );
             }
         }

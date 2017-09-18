@@ -5,6 +5,8 @@
  */
 namespace MSBios\Monolog\Formatter;
 
+use Monolog\Formatter\FormatterInterface;
+
 /**
  * Interface DefaultFormatterInterface
  * @package MSBios\Monolog\Formatter

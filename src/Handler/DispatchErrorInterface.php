@@ -5,6 +5,8 @@
  */
 namespace MSBios\Monolog\Handler;
 
+use Monolog\Handler\HandlerInterface;
+
 /**
  * Interface DispatchErrorInterface
  * @package MSBios\Monolog\Handler

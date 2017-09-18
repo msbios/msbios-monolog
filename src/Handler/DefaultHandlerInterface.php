@@ -5,8 +5,7 @@
  */
 namespace MSBios\Monolog\Handler;
 
-use Monolog\Handler\StreamHandler;
-use MSBios\Monolog\Formatter\DefaultFormatterInterface;
+use Monolog\Handler\HandlerInterface;
 
 /**
  * Interface DefaultHandlerInterface

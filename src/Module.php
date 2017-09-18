@@ -6,19 +6,15 @@
 
 namespace MSBios\Monolog;
 
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Handler\HandlerInterface;
-use Monolog\Logger;
 use MSBios\ModuleInterface;
-use MSBios\Monolog\Config\Config;
-use Zend\EventManager\AbstractListenerAggregate;
+use Psr\Log\LoggerInterface;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\LazyListenerAggregate;
 use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
-use Zend\Mvc\Application;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\Mvc\ApplicationInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -27,12 +23,15 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * @package MSBios\Monolog
  * @link https://github.com/gdpro/gdpro-monolog
  */
-class Module implements ModuleInterface, BootstrapListenerInterface, AutoloaderProviderInterface
+class Module implements ModuleInterface,
+    BootstrapListenerInterface,
+    ServiceProviderInterface,
+    AutoloaderProviderInterface
 {
     /** @const VERSION */
     const VERSION = '0.0.1';
 
-    /** @var ENABLED */
+    /** @const ENABLED */
     const ENABLED = 'enabled';
 
     /**
@@ -76,6 +75,23 @@ class Module implements ModuleInterface, BootstrapListenerInterface, AutoloaderP
                     __NAMESPACE__ => __DIR__,
                 ],
             ],
+        ];
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getServiceConfig()
+    {
+        return [
+            'factories' => [
+                LoggerInterface::class => function () {
+                    return self::class; // Placeholder name
+                }
+            ]
         ];
     }
 }

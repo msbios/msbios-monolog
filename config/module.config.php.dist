@@ -7,7 +7,13 @@
 namespace MSBios\Monolog;
 
 return [
+
     Module::class => [
+
+        'listeners' => [
+
+        ],
+
         'loggers' => [
             Listener\CheckSlowResponseTimeListener::class => [
                 'handlers' => [
@@ -17,10 +23,12 @@ return [
                     \Monolog\Processor\WebProcessor::class,
                     \Monolog\Processor\PsrLogMessageProcessor::class
                 ],
-                'enabled' => true,
-                'threshold' => 400
+                'options' => [
+                    'enabled' => true,
+                    'threshold' => 400
+                ]
             ],
-            Listener\LogDispatchErrorListener::class => [
+            Listener\LoggerDispatchErrorListener::class => [
                 'handlers' => [
                     Handler\DispatchErrorInterface::class
                 ],
@@ -28,9 +36,11 @@ return [
                     \Monolog\Processor\WebProcessor::class,
                     \Monolog\Processor\PsrLogMessageProcessor::class
                 ],
-                'enabled' => true,
+                'options' => [
+                    'enabled' => true
+                ]
             ],
-            Listener\LogRenderErrorListener::class => [
+            Listener\LoggerRenderErrorListener::class => [
                 'handlers' => [
                     Handler\RenderErrorInterface::class
                 ],
@@ -38,49 +48,48 @@ return [
                     \Monolog\Processor\WebProcessor::class,
                     \Monolog\Processor\PsrLogMessageProcessor::class
                 ],
-                'enabled' => true,
-            ]
+                'options' => [
+                    'enabled' => true
+                ]
+            ],
         ],
 
         'handlers' => [
+
+            // Default
             Handler\DefaultHandlerInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
                 'args' => [
-                    'stream' => './data/logs/monolog/default.handler.log'
+                    'stream' => './data/logs/default.handler.log'
                 ],
-                'formatter' => Formatter\SlowResponseTimeInterface::class
+                'formatter' => Formatter\DefaultFormatterInterface::class
             ],
+
             Handler\DispatchErrorInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
                 'args' => [
-                    'stream' => './data/logs/monolog/dispatch.error.handler.log'
+                    'stream' => './data/logs/dispatch.error.handler.log'
                 ],
                 'formatter' => Formatter\DefaultFormatterInterface::class
             ],
             Handler\RenderErrorInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
                 'args' => [
-                    'stream' => './data/logs/monolog/render.error.handler.log'
+                    'stream' => './data/logs/render.error.handler.log'
                 ],
                 'formatter' => Formatter\DefaultFormatterInterface::class
             ],
             Handler\SlowResponseTimeInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,
                 'args' => [
-                    'stream' => './data/logs/monolog/slow.response.handler.log'
+                    'stream' => './data/logs/slow.response.handler.log'
                 ],
-                'formatter' => Formatter\SlowResponseTimeInterface::class
+                'formatter' => Formatter\DefaultFormatterInterface::class
             ]
         ],
 
         'formatters' => [
             Formatter\DefaultFormatterInterface::class => [
-                'class' => \Monolog\Formatter\LineFormatter::class,
-                'args' => [
-                    'format' => "%datetime% - %channel% - %message% \n%extra% \n",
-                ],
-            ],
-            Formatter\SlowResponseTimeInterface::class => [
                 'class' => \Monolog\Formatter\LineFormatter::class,
                 'args' => [
                     'format' => "%datetime% - %channel% - %message% \n%extra% \n",

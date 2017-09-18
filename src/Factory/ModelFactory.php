@@ -24,6 +24,8 @@ class ModelFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new Config($container->get('config')[Module::class]);
+        return new Config(
+            $container->get('config')[Module::class]
+        );
     }
 }
