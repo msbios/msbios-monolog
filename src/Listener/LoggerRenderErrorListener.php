@@ -26,7 +26,7 @@ class LoggerRenderErrorListener implements LoggerAwareInterface
         /** @var string $error */
         $error = $e->getError();
 
-        if (!$error) {
+        if (! $error) {
             return;
         }
 

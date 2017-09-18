@@ -33,7 +33,7 @@ class LoggerInitializer implements InitializerInterface
      */
     public function __invoke(ContainerInterface $container, $instance)
     {
-        if (!$instance instanceof LoggerAwareInterface) {
+        if (! $instance instanceof LoggerAwareInterface) {
             return;
         }
 
@@ -63,10 +63,8 @@ class LoggerInitializer implements InitializerInterface
      * @param $an_array
      * @return LoggerInitializer
      */
-    static function __set_state($an_array)
+    public static function __set_state($an_array)
     {
         return new self();
     }
-
-
 }

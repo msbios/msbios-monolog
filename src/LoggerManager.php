@@ -85,7 +85,6 @@ class LoggerManager implements LoggerManagerInterface
         );
 
         return $this->addHandler($key, $handler);
-
     }
 
     /**

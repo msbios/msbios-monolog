@@ -34,6 +34,4 @@ trait LoggerAwareTrait
         $this->logger = $logger;
         return $this;
     }
-
-
 }

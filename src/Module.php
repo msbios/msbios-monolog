@@ -23,7 +23,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * @package MSBios\Monolog
  * @link https://github.com/gdpro/gdpro-monolog
  */
-class Module implements ModuleInterface,
+class Module implements
+    ModuleInterface,
     BootstrapListenerInterface,
     ServiceProviderInterface,
     AutoloaderProviderInterface

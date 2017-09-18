@@ -31,7 +31,9 @@ class CheckSlowResponseTimeListener extends AbstractTimemableListener
                 $this->getLogger()->info(sprintf("%.0fms", $elapsedTime));
             } catch (\Exception $e) {
                 throw new LoggingException(
-                    'An Exception happenned while logging message for CheckSlowRespondTimeListener on action onFinish', 500, $e
+                    'An Exception happenned while logging message for CheckSlowRespondTimeListener on action onFinish',
+                    500,
+                    $e
                 );
             }
         }

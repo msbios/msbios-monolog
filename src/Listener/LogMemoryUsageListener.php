@@ -104,7 +104,8 @@ class LogMemoryUsageListener extends AbstractTimemableListener
                         $statLineData = explode(":", trim($statLine));
 
                         //
-                        // Extract size (TODO: It seems that (at least) the two values for total and free memory have the unit "kB" always. Is this correct?
+                        // Extract size (TODO: It seems that (at least) the two values for total and free memory have
+                        // the unit "kB" always. Is this correct?
                         //
 
                         // Total memory
@@ -153,13 +154,15 @@ class LogMemoryUsageListener extends AbstractTimemableListener
             if ($bytes == 0) {
                 return '0 ' . $unit[0];
             }
-            return @round($bytes / pow(1024, ($i = floor(log($bytes, 1024)))), 2) . ' ' . (isset($unit[$i]) ? $unit[$i] : 'B');
+            return @round($bytes / pow(1024, ($i = floor(log($bytes, 1024)))), 2) . ' '
+                . (isset($unit[$i]) ? $unit[$i] : 'B');
         } else {
             $unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
             if ($bytes == 0) {
                 return '0 ' . $unit[0];
             }
-            return @round($bytes / pow(1000, ($i = floor(log($bytes, 1000)))), 2) . ' ' . (isset($unit[$i]) ? $unit[$i] : 'B');
+            return @round($bytes / pow(1000, ($i = floor(log($bytes, 1000)))), 2) . ' '
+                . (isset($unit[$i]) ? $unit[$i] : 'B');
         }
     }
 }
