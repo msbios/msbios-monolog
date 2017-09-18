@@ -16,15 +16,15 @@ use Zend\Config\Config;
  * Class LoggerManager
  * @package MSBios\Monolog
  */
-class LoggerManager
+class LoggerManager implements LoggerManagerInterface
 {
     /** @var FormatterInterface[] */
     protected $formatters = [];
 
-    /** @var array */
+    /** @var HandlerInterface[] */
     protected $handlers = [];
 
-    /** @var LoggerInterface */
+    /** @var LoggerInterface[] */
     protected $loggers = [];
 
     /**
@@ -146,7 +146,7 @@ class LoggerManager
 
     /**
      * @param $key
-     * @return mixed
+     * @return LoggerInterface
      */
     public function get($key)
     {
