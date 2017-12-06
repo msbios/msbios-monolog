@@ -14,7 +14,7 @@ use Zend\Config\Config;
  */
 trait OptionsAwareTrait
 {
-    /** @var Config */
+    /** @var array */
     protected $options;
 
     /**
@@ -26,10 +26,10 @@ trait OptionsAwareTrait
     }
 
     /**
-     * @param Config $options
+     * @param array $options
      * @return $this
      */
-    public function setOptions(Config $options)
+    public function setOptions(array $options)
     {
         $this->options = $options;
         return $this;

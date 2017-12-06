@@ -9,7 +9,6 @@ namespace MSBios\Monolog;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\HandlerInterface;
 use Psr\Log\LoggerInterface;
-use Zend\Config\Config;
 
 /**
  * Interface LoggerManagerInterface
@@ -19,10 +18,10 @@ interface LoggerManagerInterface
 {
     /**
      * @param $key
-     * @param Config $options
-     * @return LoggerManager
+     * @param array $options
+     * @return mixed
      */
-    public function initFormatter($key, Config $options);
+    public function initFormatter($key, array $options);
 
     /**
      * @param $key
@@ -39,10 +38,10 @@ interface LoggerManagerInterface
 
     /**
      * @param $key
-     * @param Config $options
-     * @return LoggerManager
+     * @param array $options
+     * @return mixed
      */
-    public function initHandler($key, Config $options);
+    public function initHandler($key, array $options);
 
     /**
      * @param $key
@@ -59,10 +58,10 @@ interface LoggerManagerInterface
 
     /**
      * @param $key
-     * @param Config $options
-     * @return LoggerManager
+     * @param array $options
+     * @return mixed
      */
-    public function init($key, Config $options);
+    public function init($key, array $options);
 
     /**
      * @param $key

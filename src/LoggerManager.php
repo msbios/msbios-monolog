@@ -28,22 +28,22 @@ class LoggerManager implements LoggerManagerInterface
     protected $loggers = [];
 
     /**
-     * @param Config $options
+     * @param array $options
      * @return object
      */
-    protected function factory(Config $options)
+    protected function factory(array $options)
     {
-        return (new \ReflectionClass($options->get('class')))->newInstanceArgs(
-            $options->get('args')->toArray()
+        return (new \ReflectionClass($options['class']))->newInstanceArgs(
+            $options['args']
         );
     }
 
     /**
      * @param $key
-     * @param Config $options
+     * @param array $options
      * @return LoggerManager
      */
-    public function initFormatter($key, Config $options)
+    public function initFormatter($key, array $options)
     {
         /** @var FormatterInterface $formatter */
         $formatter = $this->factory($options);
@@ -72,16 +72,16 @@ class LoggerManager implements LoggerManagerInterface
 
     /**
      * @param $key
-     * @param Config $options
+     * @param array $options
      * @return LoggerManager
      */
-    public function initHandler($key, Config $options)
+    public function initHandler($key, array $options)
     {
         /** @var HandlerInterface $handler */
         $handler = $this->factory($options);
 
         $handler->setFormatter(
-            $this->getFormatter($options->get('formatter'))
+            $this->getFormatter($options['formatter'])
         );
 
         return $this->addHandler($key, $handler);
@@ -109,23 +109,23 @@ class LoggerManager implements LoggerManagerInterface
 
     /**
      * @param $key
-     * @param Config $options
+     * @param array $options
      * @return LoggerManager
      */
-    public function init($key, Config $options)
+    public function init($key, array $options)
     {
         /** @var LoggerInterface $logger */
         $logger = new Logger($key);
 
         /** @var string $handler */
-        foreach ($options->get('handlers') as $handler) {
+        foreach ($options['handlers'] as $handler) {
             $logger->pushHandler(
                 $this->getHandler($handler)
             );
         }
 
         /** @var string $processor */
-        foreach ($options->get('processors') as $processor) {
+        foreach ($options['processors'] as $processor) {
             $logger->pushProcessor(new $processor());
         }
 

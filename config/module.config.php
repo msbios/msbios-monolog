@@ -12,21 +12,20 @@ return [
 
     'service_manager' => [
         'factories' => [
-            Module::class => Factory\ModelFactory::class,
+            Module::class =>
+                Factory\ModuleFactory::class,
 
             // logger manager
-            LoggerManager::class => Factory\LoggerManagerFactory::class,
+            LoggerManager::class =>
+                Factory\LoggerManagerFactory::class,
 
             // listeners
-            Listener\CheckSlowResponseTimeListener::class => InvokableFactory::class,
-            Listener\LoggerDispatchErrorListener::class => InvokableFactory::class,
-            Listener\LoggerRenderErrorListener::class => InvokableFactory::class
-        ],
-        'shared' => [
-            // Logger::class => false
-        ],
-        'initializers' => [
-            new Initializer\LoggerInitializer
+            Listener\CheckSlowResponseTimeListener::class =>
+                InvokableFactory::class,
+            Listener\LoggerDispatchErrorListener::class =>
+                InvokableFactory::class,
+            Listener\LoggerRenderErrorListener::class =>
+                InvokableFactory::class
         ]
     ],
 
@@ -47,7 +46,7 @@ return [
                 'method' => 'onRenderError',
                 'event' => \Zend\Mvc\MvcEvent::EVENT_RENDER_ERROR,
                 'priority' => 100,
-            ],
+            ]
         ],
 
         'loggers' => [
@@ -91,7 +90,6 @@ return [
         ],
 
         'handlers' => [
-
             // Default
             Handler\DefaultHandlerInterface::class => [
                 'class' => \Monolog\Handler\StreamHandler::class,

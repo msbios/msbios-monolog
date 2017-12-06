@@ -6,8 +6,6 @@
 
 namespace MSBios\Monolog;
 
-use Zend\Config\Config;
-
 /**
  * Interface OptionsAwareInterface
  * @package MSBios\Monolog
@@ -15,13 +13,13 @@ use Zend\Config\Config;
 interface OptionsAwareInterface
 {
     /**
-     * @return Config
+     * @return mixed
      */
     public function getOptions();
 
     /**
-     * @param Config $options
-     * @return $this
+     * @param array $options
+     * @return mixed
      */
-    public function setOptions(Config $options);
+    public function setOptions(array $options);
 }

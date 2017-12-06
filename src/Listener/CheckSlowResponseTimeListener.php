@@ -26,7 +26,7 @@ class CheckSlowResponseTimeListener extends AbstractTimemableListener
         /** @var integer $elapsedTime */
         $elapsedTime = (microtime(true) - $this->getStartTime()) * 1000;
 
-        if ($elapsedTime > $this->getOptions()->get(self::THRESHOLD)) {
+        if ($elapsedTime > $this->getOptions()[self::THRESHOLD]) {
             try {
                 $this->getLogger()->info(sprintf("%.0fms", $elapsedTime));
             } catch (\Exception $e) {

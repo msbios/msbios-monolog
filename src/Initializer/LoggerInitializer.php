@@ -48,9 +48,7 @@ class LoggerInitializer implements InitializerInterface
 
         if ($instance instanceof OptionsAwareInterface) {
             $instance->setOptions(
-                $options->get('loggers')
-                    ->get($identifier)
-                    ->get('options')
+                $options['loggers'][$identifier]['options']
             );
         }
     }

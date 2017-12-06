@@ -35,7 +35,7 @@ class LoggerManagerFactory implements FactoryInterface
          * @var string $key
          * @var Config $config
          */
-        foreach ($options->get('formatters') as $key => $config) {
+        foreach ($options['formatters'] as $key => $config) {
             $loggerManager->initFormatter($key, $config);
         }
 
@@ -43,7 +43,7 @@ class LoggerManagerFactory implements FactoryInterface
          * @var string $key
          * @var Config $config
          */
-        foreach ($options->get('handlers') as $key => $config) {
+        foreach ($options['handlers'] as $key => $config) {
             $loggerManager->initHandler($key, $config);
         }
 
@@ -51,7 +51,7 @@ class LoggerManagerFactory implements FactoryInterface
          * @var string $key
          * @var Config $config
          */
-        foreach ($options->get('loggers') as $key => $config) {
+        foreach ($options['loggers'] as $key => $config) {
             $loggerManager->init($key, $config);
         }
 

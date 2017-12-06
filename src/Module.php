@@ -7,6 +7,7 @@
 namespace MSBios\Monolog;
 
 use MSBios\ModuleInterface;
+use MSBios\Monolog\Initializer\LoggerInitializer;
 use Psr\Log\LoggerInterface;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\LazyListenerAggregate;
@@ -30,7 +31,7 @@ class Module implements
     AutoloaderProviderInterface
 {
     /** @const VERSION */
-    const VERSION = '1.0.2';
+    const VERSION = '1.0.3';
 
     /** @const ENABLED */
     const ENABLED = 'enabled';
@@ -58,7 +59,7 @@ class Module implements
         $serviceManager = $target->getServiceManager();
 
         (new LazyListenerAggregate(
-            $serviceManager->get(self::class)->get('listeners')->toArray(),
+            $serviceManager->get(self::class)['listeners'],
             $serviceManager
         ))->attach($target->getEventManager());
     }
@@ -92,6 +93,9 @@ class Module implements
                 LoggerInterface::class => function () {
                     return self::class; // Placeholder name
                 }
+            ],
+            'initializers' => [
+                new LoggerInitializer
             ]
         ];
     }
