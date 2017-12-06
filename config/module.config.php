@@ -23,7 +23,7 @@ return [
             Listener\LoggerRenderErrorListener::class => InvokableFactory::class
         ],
         'shared' => [
-            Logger::class => false
+            // Logger::class => false
         ],
         'initializers' => [
             new Initializer\LoggerInitializer

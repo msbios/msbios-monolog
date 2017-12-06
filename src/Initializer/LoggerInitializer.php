@@ -7,14 +7,10 @@
 namespace MSBios\Monolog\Initializer;
 
 use Interop\Container\ContainerInterface;
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Handler\HandlerInterface;
-use MSBios\Monolog\Logger;
 use MSBios\Monolog\LoggerAwareInterface;
 use MSBios\Monolog\LoggerManager;
 use MSBios\Monolog\Module;
 use MSBios\Monolog\OptionsAwareInterface;
-use Psr\Log\LoggerInterface;
 use Zend\Config\Config;
 use Zend\ServiceManager\Initializer\InitializerInterface;
 
