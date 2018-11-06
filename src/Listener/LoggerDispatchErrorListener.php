@@ -25,7 +25,7 @@ class LoggerDispatchErrorListener implements LoggerAwareInterface
      */
     public function onDispatchError(EventInterface $event)
     {
-        if (!$event->isError() || Application::ERROR_EXCEPTION !== $event->getError()) {
+        if (! $event->isError() || Application::ERROR_EXCEPTION !== $event->getError()) {
             return;
         }
 
