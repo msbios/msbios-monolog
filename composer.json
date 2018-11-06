@@ -1,7 +1,7 @@
 {
   "name": "msbios/monolog",
   "description": "MSBios Monolog",
-  "license": "GPL",
+  "license": "MIT",
   "keywords": [
     "php"
   ],
