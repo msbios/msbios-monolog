@@ -9,15 +9,15 @@ namespace MSBios\Monolog;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
-
     'service_manager' => [
         'factories' => [
             Module::class =>
                 Factory\ModuleFactory::class,
-
-            // logger manager
             LoggerManager::class =>
                 Factory\LoggerManagerFactory::class,
+
+            MonologListenerAggregate::class =>
+                Factory\MonologListenerAggregateFactory::class,
 
             // listeners
             Listener\CheckSlowResponseTimeListener::class =>
@@ -130,5 +130,9 @@ return [
                 ],
             ]
         ]
+    ],
+
+    'listeners' => [
+        MonologListenerAggregate::class
     ]
 ];

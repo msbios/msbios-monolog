@@ -9,6 +9,8 @@ namespace MSBios\Monolog\Listener;
 use MSBios\Monolog\LoggerAwareInterface;
 use MSBios\Monolog\LoggerAwareTrait;
 use Zend\EventManager\EventInterface;
+use Zend\Mvc\Application;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Class LogDispatchErrorListener
@@ -19,17 +21,17 @@ class LoggerDispatchErrorListener implements LoggerAwareInterface
     use LoggerAwareTrait;
 
     /**
-     * @param EventInterface $event
+     * @param EventInterface|MvcEvent $event
      */
     public function onDispatchError(EventInterface $event)
     {
-        /** @var \Exception $exception */
-        $exception = $event->getParam('exception');
-
-        if (! $exception instanceof \Exception) {
+        if (!$event->isError() || Application::ERROR_EXCEPTION !== $event->getError()) {
             return;
         }
 
-        $this->getLogger()->error($exception->getTraceAsString());
+        /** @var \Exception $exception */
+        $exception = $event->getParam('exception');
+        $this->getLogger()
+            ->error($exception->getTraceAsString());
     }
 }

@@ -13,4 +13,5 @@ use Monolog\Formatter\FormatterInterface;
  */
 interface DefaultFormatterInterface extends FormatterInterface
 {
+    // ...
 }

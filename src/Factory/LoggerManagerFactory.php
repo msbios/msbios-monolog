@@ -21,7 +21,7 @@ class LoggerManagerFactory implements FactoryInterface
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param array|null $options
-     * @return LoggerManager
+     * @return LoggerManager|object
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {

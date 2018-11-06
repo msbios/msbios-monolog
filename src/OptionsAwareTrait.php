@@ -6,8 +6,6 @@
 
 namespace MSBios\Monolog;
 
-use Zend\Config\Config;
-
 /**
  * Trait OptionsAwareTrait
  * @package MSBios\Monolog
@@ -18,7 +16,7 @@ trait OptionsAwareTrait
     protected $options;
 
     /**
-     * @return Config
+     * @return array
      */
     public function getOptions()
     {

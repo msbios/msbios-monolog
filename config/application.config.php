@@ -8,6 +8,9 @@
 return [
     // Retrieve list of modules used in this application.
     'modules' => [
+
+        'Zend\Cache',
+        'Zend\Serializer',
         'Zend\Mvc\Plugin\FilePrg',
         'Zend\Mvc\Plugin\FlashMessenger',
         'Zend\Mvc\Plugin\Identity',
@@ -22,6 +25,8 @@ return [
         'Zend\Navigation',
         'Zend\Router',
 
+        'MSBios\Cache',
+        'MSBios\View',
         'MSBios\Assetic',
         'MSBios\I18n',
         'MSBios\Widget',
@@ -44,9 +49,7 @@ return [
             realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.php',
         ],
         'config_cache_enabled' => false,
-        // 'config_cache_key' => 'application.config.cache',
         'module_map_cache_enabled' => false,
-        // 'module_map_cache_key' => 'application.module.cache',
         'cache_dir' => 'data/cache/',
     ],
 ];

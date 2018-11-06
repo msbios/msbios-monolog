@@ -9,11 +9,6 @@ namespace MSBios\Monolog;
 return [
 
     Module::class => [
-
-        'listeners' => [
-
-        ],
-
         'loggers' => [
             Listener\CheckSlowResponseTimeListener::class => [
                 'handlers' => [

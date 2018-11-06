@@ -6,9 +6,10 @@
 namespace MSBios\Monolog\Exception;
 
 /**
- * Class LoggingException
+ * Class Exception
  * @package MSBios\Monolog\Exception
  */
-class LoggingException extends \Exception
+class Exception extends \Exception
 {
+    // ...
 }

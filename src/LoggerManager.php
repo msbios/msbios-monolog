@@ -10,7 +10,6 @@ use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Zend\Config\Config;
 
 /**
  * Class LoggerManager
@@ -30,18 +29,20 @@ class LoggerManager implements LoggerManagerInterface
     /**
      * @param array $options
      * @return object
+     * @throws \ReflectionException
      */
     protected function factory(array $options)
     {
-        return (new \ReflectionClass($options['class']))->newInstanceArgs(
-            $options['args']
-        );
+        /** @var \ReflectionClass $reflection */
+        $reflection = new \ReflectionClass($options['class']);
+        return $reflection->newInstanceArgs($options['args']);
     }
 
     /**
      * @param $key
      * @param array $options
-     * @return LoggerManager
+     * @return mixed|LoggerManager
+     * @throws \ReflectionException
      */
     public function initFormatter($key, array $options)
     {
@@ -53,7 +54,7 @@ class LoggerManager implements LoggerManagerInterface
     /**
      * @param $key
      * @param FormatterInterface $formatter
-     * @return $this
+     * @return $this|LoggerManagerInterface
      */
     public function addFormatter($key, FormatterInterface $formatter)
     {
@@ -73,7 +74,8 @@ class LoggerManager implements LoggerManagerInterface
     /**
      * @param $key
      * @param array $options
-     * @return LoggerManager
+     * @return mixed|LoggerManager
+     * @throws \ReflectionException
      */
     public function initHandler($key, array $options)
     {
@@ -90,7 +92,7 @@ class LoggerManager implements LoggerManagerInterface
     /**
      * @param $key
      * @param HandlerInterface $handler
-     * @return $this
+     * @return $this|LoggerManagerInterface
      */
     public function addHandler($key, HandlerInterface $handler)
     {
@@ -100,7 +102,7 @@ class LoggerManager implements LoggerManagerInterface
 
     /**
      * @param $key
-     * @return mixed
+     * @return mixed|HandlerInterface
      */
     public function getHandler($key)
     {
@@ -110,7 +112,7 @@ class LoggerManager implements LoggerManagerInterface
     /**
      * @param $key
      * @param array $options
-     * @return LoggerManager
+     * @return mixed|LoggerManager
      */
     public function init($key, array $options)
     {
@@ -135,7 +137,7 @@ class LoggerManager implements LoggerManagerInterface
     /**
      * @param $key
      * @param LoggerInterface $logger
-     * @return $this
+     * @return $this|LoggerManagerInterface
      */
     public function add($key, LoggerInterface $logger)
     {

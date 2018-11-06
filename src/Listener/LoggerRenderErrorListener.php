@@ -9,6 +9,7 @@ namespace MSBios\Monolog\Listener;
 use MSBios\Monolog\LoggerAwareInterface;
 use MSBios\Monolog\LoggerAwareTrait;
 use Zend\EventManager\EventInterface;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Class LoggerRenderErrorListener
@@ -19,14 +20,11 @@ class LoggerRenderErrorListener implements LoggerAwareInterface
     use LoggerAwareTrait;
 
     /**
-     * @param EventInterface $e
+     * @param EventInterface|MvcEvent $e
      */
     public function onRenderError(EventInterface $e)
     {
-        /** @var string $error */
-        $error = $e->getError();
-
-        if (! $error) {
+        if (! $e->isError()) {
             return;
         }
 
