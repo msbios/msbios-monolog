@@ -8,7 +8,7 @@
 return [
     // Retrieve list of modules used in this application.
     'modules' => [
-
+        'MSBios\Session',
         'Zend\Cache',
         'Zend\Serializer',
         'Zend\Mvc\Plugin\FilePrg',

@@ -24,8 +24,8 @@
     }
   },
   "require": {
-    "zendframework/zend-log": "^2.10",
-    "monolog/monolog": "^1.23",
+    "zendframework/zend-log": "^2.11",
+    "monolog/monolog": "^1.25",
     "msbios/msbios": "^1.0"
   },
   "require-dev": {
