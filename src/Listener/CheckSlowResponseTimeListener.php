@@ -11,6 +11,7 @@ use Zend\EventManager\EventInterface;
 /**
  * Class CheckSlowResponseTimeListener
  * @package MSBios\Monolog\Listeners
+ * @deprecated
  */
 class CheckSlowResponseTimeListener extends AbstractTimemableListener
 {

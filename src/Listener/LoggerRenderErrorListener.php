@@ -14,6 +14,7 @@ use Zend\Mvc\MvcEvent;
 /**
  * Class LoggerRenderErrorListener
  * @package MSBios\Monolog\Listener
+ * @deprecated
  */
 class LoggerRenderErrorListener implements LoggerAwareInterface
 {

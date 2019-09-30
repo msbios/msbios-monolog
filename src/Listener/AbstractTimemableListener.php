@@ -14,6 +14,7 @@ use Zend\EventManager\EventInterface;
 /**
  * Class AbstractTimemableListener
  * @package MSBios\Monolog\Listener
+ * @deprecated
  */
 abstract class AbstractTimemableListener implements
     LoggerAwareInterface,

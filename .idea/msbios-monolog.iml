@@ -16,10 +16,13 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/assetic" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/debug" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/exception" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/i18n" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/json" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/msbios" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/navigation" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/session" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/stdlib" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/test" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/msbios/theme" />

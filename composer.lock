@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f3311c3a10bf10e4d945fd09b03e3cc",
+    "content-hash": "3d8a6cda58ba71e62753f2371fa4f749",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -114,6 +114,50 @@
                 "psr-3"
             ],
             "time": "2019-09-06T13:49:17+00:00"
+        },
+        {
+            "name": "msbios/exception",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/msbios/msbios-exception.git",
+                "reference": "fcf8363f8e9587da6b4e6e72227c03b680d3c8df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/msbios/msbios-exception/zipball/fcf8363f8e9587da6b4e6e72227c03b680d3c8df",
+                "reference": "fcf8363f8e9587da6b4e6e72227c03b680d3c8df",
+                "shasum": ""
+            },
+            "require": {
+                "msbios/msbios": "^1.0"
+            },
+            "require-dev": {
+                "msbios/debug": "^1.0",
+                "msbios/test": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MSBios\\Exception\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Judzhin Miles",
+                    "email": "info@msbios.com"
+                }
+            ],
+            "description": "MSBios Exception",
+            "homepage": "https://github.com/msbios/msbios-exception",
+            "keywords": [
+                "php"
+            ],
+            "time": "2019-09-27T17:56:01+00:00"
         },
         {
             "name": "msbios/msbios",

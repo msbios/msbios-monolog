@@ -4,13 +4,9 @@
  * @author Judzhin Miles <info[woof-woof]msbios.com>
  */
 
-namespace MSBios\Monolog\Initializer;
+namespace MSBios\Monolog;
 
 use Interop\Container\ContainerInterface;
-use MSBios\Monolog\LoggerAwareInterface;
-use MSBios\Monolog\LoggerManager;
-use MSBios\Monolog\Module;
-use MSBios\Monolog\OptionsAwareInterface;
 use Zend\Config\Config;
 use Zend\ServiceManager\Initializer\InitializerInterface;
 
@@ -21,6 +17,8 @@ use Zend\ServiceManager\Initializer\InitializerInterface;
 class LoggerInitializer implements InitializerInterface
 {
     /**
+     * @inheritdoc
+     *
      * @param ContainerInterface $container
      * @param object $instance
      */

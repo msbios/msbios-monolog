@@ -6,23 +6,14 @@
 
 namespace MSBios\Monolog;
 
-use MSBios\ModuleInterface;
-use MSBios\Monolog\Initializer\LoggerInitializer;
-use Psr\Log\LoggerInterface;
-use Zend\Loader\AutoloaderFactory;
-use Zend\Loader\StandardAutoloader;
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Class Module
  * @package MSBios\Monolog
  * @link https://github.com/gdpro/gdpro-monolog
  */
-class Module implements
-    ModuleInterface,
-    ServiceProviderInterface,
-    AutoloaderProviderInterface
+class Module extends \MSBios\Module
 {
     /** @const VERSION */
     const VERSION = '1.0.6';
@@ -31,46 +22,38 @@ class Module implements
     const ENABLED = 'enabled';
 
     /**
+     * @inheritdoc
+     *
+     * @return string
+     */
+    protected function getDir()
+    {
+        return __DIR__;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @return string
+     */
+    protected function getNamespace()
+    {
+        return __NAMESPACE__;
+    }
+
+    /**
+     * @inheritdoc
+     *
      * @return array|mixed|\Traversable
      */
     public function getConfig()
     {
-        return include __DIR__ . '/../config/module.config.php';
-    }
-
-    /**
-     * Return an array for passing to Zend\Loader\AutoloaderFactory.
-     *
-     * @return array
-     */
-    public function getAutoloaderConfig()
-    {
-        return [
-            AutoloaderFactory::STANDARD_AUTOLOADER => [
-                StandardAutoloader::LOAD_NS => [
-                    __NAMESPACE__ => __DIR__,
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Expected to return \Zend\ServiceManager\Config object or array to
-     * seed such an object.
-     *
-     * @return array|\Zend\ServiceManager\Config
-     */
-    public function getServiceConfig()
-    {
-        return [
-            'factories' => [
-                LoggerInterface::class => function () {
-                    return self::class; // Placeholder name
-                }
-            ],
-            'initializers' => [
-                new LoggerInitializer
+        return ArrayUtils::merge(parent::getConfig(), [
+            'service_manager' => (new ConfigProvider)->getDependencyConfig(),
+            'listeners' => [
+                ListenerAggregate::class =>
+                    ListenerAggregate::class
             ]
-        ];
+        ]);
     }
 }

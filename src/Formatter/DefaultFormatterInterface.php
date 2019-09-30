@@ -10,6 +10,7 @@ use Monolog\Formatter\FormatterInterface;
 /**
  * Interface DefaultFormatterInterface
  * @package MSBios\Monolog\Formatter
+ * @deprecated not need use
  */
 interface DefaultFormatterInterface extends FormatterInterface
 {

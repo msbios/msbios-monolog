@@ -13,6 +13,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 /**
  * Class MonologListenerAggregateFactory
  * @package MSBios\Monolog\Factory
+ * @deprecated ListenerAggregate use by default
  */
 class MonologListenerAggregateFactory implements FactoryInterface
 {
